@@ -1,0 +1,54 @@
+# goaljudge CMake config file
+#
+# This file sets the following variables:
+# goaljudge_FOUND - Always TRUE.
+# goaljudge_INCLUDE_DIRS - Directories containing the goaljudge include files.
+# goaljudge_IDL_DIRS - Directories containing the goaljudge IDL files.
+# goaljudge_LIBRARIES - Libraries needed to use goaljudge.
+# goaljudge_DEFINITIONS - Compiler flags for goaljudge.
+# goaljudge_VERSION - The version of goaljudge found.
+# goaljudge_VERSION_MAJOR - The major version of goaljudge found.
+# goaljudge_VERSION_MINOR - The minor version of goaljudge found.
+# goaljudge_VERSION_REVISION - The revision version of goaljudge found.
+# goaljudge_VERSION_CANDIDATE - The candidate version of goaljudge found.
+
+message(STATUS "Found goaljudge-@PROJECT_VERSION@")
+set(goaljudge_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(goaljudge_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(goaljudge_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(goaljudge_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(goaljudge_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(goaljudge_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(goaljudge_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(goaljudge_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(goaljudge_VERSION @PROJECT_VERSION@)
+set(goaljudge_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(goaljudge_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(goaljudge_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(goaljudge_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
